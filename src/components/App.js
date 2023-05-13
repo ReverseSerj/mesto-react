@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="page">
-      <body class="page__content">
+      <div className="page__content">
         <Header />
         <Main
           onEditAvatar={handleEditAvatarClick}
@@ -57,45 +57,43 @@ function App() {
         <PopupWithForm
           name={'avatar'}
           title={'Обновить аватар'}
-          buttonText={'Сохранить'}
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         >
           <input 
             type="url" 
             name="avatar" 
-            class="popup__field popup__field_type_title popup__field_pos_top" 
+            className="popup__field popup__field_type_title popup__field_pos_top" 
             placeholder="Ссылка" 
             required
           />
-          <span class="popup__field-error">Вы пропустили это поле.</span>
+          <span className="popup__field-error">Вы пропустили это поле.</span>
         </PopupWithForm>
           
         <PopupWithForm
           name={'profile'}
           title={'Редактировать профиль'}
-          buttonText={'Сохранить'}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         >
           <input 
             type="text" 
             name="name" 
-            class="popup__field popup__field_type_name popup__field_pos_top" 
+            className="popup__field popup__field_type_name popup__field_pos_top" 
             placeholder="Имя" 
-            minlength="2" 
-            maxlength="40"
+            minLength="2" 
+            maxLength="40"
             required 
           />
-          <span class="popup__field-error">Вы пропустили это поле.</span>
+          <span className="popup__field-error">Вы пропустили это поле.</span>
           
           <input 
             type="text" 
             name="about" 
-            class="popup__field popup__field_type_status popup__field_pos_bottom" 
+            className="popup__field popup__field_type_status popup__field_pos_bottom" 
             placeholder="О себе" 
-            minlength="2" 
-            maxlength="200" 
+            minLength="2" 
+            maxLength="200" 
             required
           />
           <span class="popup__field-error" id="about-status">Вы пропустили это поле.</span>
@@ -104,29 +102,28 @@ function App() {
         <PopupWithForm
           name={'post'}
           title={'Новое место'}
-          buttonText={'Сохранить'}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
         >
           <input 
             type="text" 
             name="name" 
-            class="popup__field popup__field_type_title popup__field_pos_top" 
+            className="popup__field popup__field_type_title popup__field_pos_top" 
             placeholder="Название"
-            minlength="2" 
-            maxlength="30"
+            minLength="2" 
+            maxLength="30"
             required
           />
-          <span class="popup__field-error">Вы пропустили это поле.</span>
+          <span className="popup__field-error">Вы пропустили это поле.</span>
 
           <input 
             type="url" 
             name="link" 
-            class="popup__field popup__field_type_link popup__field_pos_bottom" 
+            className="popup__field popup__field_type_link popup__field_pos_bottom" 
             placeholder="Ссылка на картинку" 
             required
           />
-          <span class="popup__field-error">Введите адрес сайта.</span>
+          <span className="popup__field-error">Введите адрес сайта.</span>
         </PopupWithForm>
         <PopupWithForm
           name={'delete'}
@@ -139,7 +136,7 @@ function App() {
           card={selectedCard} 
           onClose={closeAllPopups} 
         />
-      </body>
+      </div>
     </div>
   );
 }
