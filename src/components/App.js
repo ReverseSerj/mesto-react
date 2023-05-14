@@ -96,7 +96,7 @@ function App() {
             maxLength="200" 
             required
           />
-          <span class="popup__field-error" id="about-status">Вы пропустили это поле.</span>
+          <span className="popup__field-error" id="about-status">Вы пропустили это поле.</span>
         </PopupWithForm>
 
         <PopupWithForm
