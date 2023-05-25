@@ -68,6 +68,9 @@ function App() {
       .then(() => {
         setCards((state) => state.filter(c => c._id !== (card._id)))
       })
+      .catch((err) => { 
+        console.log(err); 
+      }) 
   }
 
   function handleUpdateUser(data) {
