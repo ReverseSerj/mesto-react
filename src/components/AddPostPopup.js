@@ -1,30 +1,21 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import { useForm } from "../hooks/useForm";
 
-function AddPostPopup({ onSubmit, isOpen, onClose }) {
-  const [postName, setPostName] = React.useState('');
-  const [postLink, setPostLink] = React.useState('');
-
+function AddPostPopup({ onSubmit, isOpen, onClose, onLoading }) {
+  const {values, handleChange, setValues} = useForm({});
+ 
   React.useEffect(() => {
     if (isOpen) {
-      setPostName('');
-      setPostLink('');
+      setValues({});
     }
-  }, [isOpen]);
-
-  function handlePostName(e) {
-    setPostName(e.target.value);
-  }
-
-  function handlePostLink(e) {
-    setPostLink(e.target.value);
-  }
+  }, [isOpen, setValues]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit({
-      name: postName,
-      link: postLink,
+      name: values.name,
+      link: values.link
     });
   }
 
@@ -35,6 +26,7 @@ function AddPostPopup({ onSubmit, isOpen, onClose }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText={onLoading  ? 'Сохранение...' : 'Сохранить'}
     >
       <input 
         type="text" 
@@ -43,8 +35,8 @@ function AddPostPopup({ onSubmit, isOpen, onClose }) {
         placeholder="Название"
         minLength="2" 
         maxLength="30"
-        onChange={handlePostName}
-        value={postName}
+        onChange={handleChange}
+        value={values.name || ''}
         required
       />
       <span className="popup__field-error">Вы пропустили это поле.</span>
@@ -54,8 +46,8 @@ function AddPostPopup({ onSubmit, isOpen, onClose }) {
         name="link" 
         className="popup__field popup__field_type_link popup__field_pos_bottom" 
         placeholder="Ссылка на картинку"
-        onChange={handlePostLink}
-        value={postLink}
+        onChange={handleChange}
+        value={values.link || ''}
         required
       />
       <span className="popup__field-error">Введите адрес сайта.</span>

@@ -1,12 +1,14 @@
 import React from "react";
+import { usePopupClose } from "../hooks/usePopupClose";
 
-function ImagePopup(props) {
+function ImagePopup({card, onClose}) { 
+  usePopupClose(card?.link, onClose)
   return (
-    <div className={`popup popup_type_photo ${props.card.name ? `popup_opened` : ``}`}>
+    <div className={`popup popup_type_photo ${card.name ? `popup_opened` : ``}`}>
       <div className="popup__container-photo">
-        <button className="popup__close popup__close_type_photo" type="button" aria-label="Закрыть" onClick={props.onClose}></button>
-        <img className="popup__img" src={props.card.link} alt={props.card.name}/>
-        <h2 className="popup__caption">{props.card.name}</h2>
+        <button className="popup__close popup__close_type_photo" type="button" aria-label="Закрыть" onClick={onClose}></button>
+        <img className="popup__img" src={card.link} alt={card.name}/>
+        <h2 className="popup__caption">{card.name}</h2>
       </div>
     </div>
   )

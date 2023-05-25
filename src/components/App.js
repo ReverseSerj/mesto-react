@@ -16,6 +16,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isDeleteConfirmPopupOpen, setIsDeleteConfirmPopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({});
   const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
@@ -69,35 +70,54 @@ function App() {
         setCards((state) => state.filter(c => c._id !== (card._id)))
       })
       .catch((err) => { 
-        console.log(err); 
-      }) 
+        console.log(err);
+      })
+      
   }
 
   function handleUpdateUser(data) {
+    setIsLoading(true);
     api.patchEditPorfile(data)
       .then((newData) => {
         setCurrentUser(newData);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleUpdateAvatar(data) {
+    setIsLoading(true);
     api.updateAvatar(data)
       .then((newAvatar) => {
         setCurrentUser(newAvatar);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleAddPostSubmit(data) {
+    setIsLoading(true);
     api.addNewCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function closeAllPopups () {
@@ -128,16 +148,19 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
+            onLoading={isLoading}
           />
           <EditProfilePopup 
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+            onLoading={isLoading}
           />
           <AddPostPopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onSubmit={handleAddPostSubmit}
+            onLoading={isLoading}
           />
           <PopupWithForm
             name={'delete'}

@@ -1,30 +1,24 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import { useForm } from "../hooks/useForm";
 
-function EditProfilePopup ({isOpen, onClose, onUpdateUser}) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
+function EditProfilePopup ({isOpen, onClose, onUpdateUser, onLoading}) {
+ 
+const currentUser = React.useContext(CurrentUserContext);
 
+  const {values, handleChange, setValues} = useForm({});
+  
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser, isOpen]);
+    setValues({...currentUser});
+  }, [currentUser, isOpen, setValues]);
 
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-
-  function hanfleChangeDescription(e) {
-    setDescription(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name,
-      about: description
+      name: values.name,
+      about: values.about
     });
   }
 
@@ -35,6 +29,7 @@ function EditProfilePopup ({isOpen, onClose, onUpdateUser}) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText={onLoading ? `Сохранение...` : `Сохранить`}
     >
       <input 
         type="text" 
@@ -43,8 +38,8 @@ function EditProfilePopup ({isOpen, onClose, onUpdateUser}) {
         placeholder="Имя" 
         minLength="2" 
         maxLength="40"
-        onChange={handleChangeName}
-        value={name || ''}
+        onChange={handleChange}
+        value={values.name || ''}
         required 
       />
       <span className="popup__field-error">Вы пропустили это поле.</span>
@@ -56,8 +51,8 @@ function EditProfilePopup ({isOpen, onClose, onUpdateUser}) {
         placeholder="О себе" 
         minLength="2" 
         maxLength="200"
-        onChange={hanfleChangeDescription}
-        value={description || ''}
+        onChange={handleChange}
+        value={values.about || ''}
         required
       />
       <span className="popup__field-error" id="about-status">Вы пропустили это поле.</span>
