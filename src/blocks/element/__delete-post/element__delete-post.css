@@ -1,4 +1,5 @@
 .element__delete-post {
+  visibility: hidden;
   margin: 0;
   padding: 0;
   background-image: url(../../../images/trash.svg);

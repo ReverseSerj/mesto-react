@@ -55,16 +55,20 @@ class Api {
     return this.queryHandler(`cards/${id}`, 'DELETE');
   }
 
-  putLike(id) {
+  /*putLike(id) {
     return this.queryHandler(`cards/${id}/likes`, 'PUT');
   }
 
   takeOffLike(id) {
     return this.queryHandler(`cards/${id}/likes`, 'DELETE');
-  }
+  } */
 
   updateAvatar(obj) {
     return this.queryHandler('users/me/avatar', 'PATCH', obj);
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    return this.queryHandler(`cards/${id}/likes`, `${!isLiked ? 'DELETE' : 'PUT'}`);
   }
 }
 
